@@ -1,0 +1,32 @@
+# Docker-related files
+Dockerfile
+.dockerignore
+
+# Documentation
+README.md
+
+# Environment variables
+.env
+
+# Dependencies
+node_modules
+
+# Build artifacts
+.next
+dist
+/.next-export
+npm-debug.log
+*.tsbuildinfo
+
+# Database files - should be mounted as a volume
+db/
+
+# Git
+.git
+.gitignore
+
+# VSCode
+.vscode
+
+# Rust build cache
+/rust-server/target

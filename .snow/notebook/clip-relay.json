@@ -1,0 +1,100 @@
+{
+  "src/components/clipboard/ClipboardGrid.tsx": [
+    {
+      "id": "notebook-1764864504569_atgthlvhr",
+      "filePath": "src/components/clipboard/ClipboardGrid.tsx",
+      "note": "⚠️ 编辑模式关键逻辑：(1) ESC键监听器必须在isEditing变化时注册/注销，避免内存泄漏 (2) 拖拽listeners必须在编辑时禁用 {...(!isEditing && listeners)}，防止编辑时意外拖动",
+      "createdAt": "2025-12-05T00:08:24.569",
+      "updatedAt": "2025-12-05T00:08:24.569"
+    }
+  ],
+  "src/components/clipboard/ClipboardList.tsx": [
+    {
+      "id": "notebook-1764864504570_qq5cfcgfs",
+      "filePath": "src/components/clipboard/ClipboardList.tsx",
+      "note": "⚠️ 编辑模式关键逻辑：(1) ESC键监听器必须在isEditing变化时注册/注销，避免内存泄漏 (2) 拖拽listeners必须在编辑时禁用 {...(!isEditing && listeners)}，防止编辑时意外拖动",
+      "createdAt": "2025-12-05T00:08:24.570",
+      "updatedAt": "2025-12-05T00:08:24.570"
+    }
+  ],
+  "rust-server/src/main.rs": [
+    {
+      "id": "notebook-1764920595517_0uhfa8f9h",
+      "filePath": "rust-server/src/main.rs",
+      "note": "⚠️ Line 1817: ShareUpdateReq 新增 custom_suffix 字段支持链接尾缀修改。Line 1881-1908: update_item_share 函数修改逻辑已修复 - 只更新 ShareLink.token，不修改 ClipboardItem.id（避免外键约束问题）。检查尾缀唯一性时查询 ShareLink.token，返回409表示尾缀重复。Line 1935: URL格式为 /s/{token}。",
+      "createdAt": "2025-12-05T15:43:15.517",
+      "updatedAt": "2025-12-05T16:50:52.421"
+    },
+    {
+      "id": "notebook-1764868339013_ivza7rtqh",
+      "filePath": "rust-server/src/main.rs",
+      "note": "⚠️ Line 215: 服务器监听地址设置为 [0, 0, 0, 0] (0.0.0.0)，接受所有网络接口的连接。如需仅本地访问，改为 [127, 0, 0, 1] (127.0.0.1)。端口默认 8087，可通过 PORT 环境变量配置",
+      "createdAt": "2025-12-05T01:12:19.013",
+      "updatedAt": "2025-12-05T01:18:55.307"
+    },
+    {
+      "id": "notebook-1764867941703_grma1xia2",
+      "filePath": "rust-server/src/main.rs",
+      "note": "⚠️ Line 1379-1442: update_clipboard 函数处理 PUT /api/clipboard/:id 请求。接收 JSON body {content: string}，更新数据库 content 和 updatedAt 字段，返回完整的 ClipboardItem JSON。Line 81: 路由添加了 .put(update_clipboard)。发送 SSE 事件 \"clipboard:updated\"",
+      "createdAt": "2025-12-05T01:05:41.703",
+      "updatedAt": "2025-12-05T01:05:41.703"
+    },
+    {
+      "id": "notebook-1764867212804_ppcnfroya",
+      "filePath": "rust-server/src/main.rs",
+      "note": "⚠️ Line 11: 已添加 Redirect 导入，用于 Line 180 的路由重定向。重定向逻辑：用户访问 /s/{id} → 重定向到 /s/?token={id} → 前端读取 token 参数并获取分享内容",
+      "createdAt": "2025-12-05T00:53:32.804",
+      "updatedAt": "2025-12-05T00:53:32.804"
+    },
+    {
+      "id": "notebook-1764865362942_qv4f9i0zc",
+      "filePath": "rust-server/src/main.rs",
+      "note": "⚠️ 自定义链接尾缀功能已完成：(1) Line 1242-1243: 创建clipboard时使用id作为token; (2) Line 1723-1724: get_item_share自动创建share时也使用id作为token; (3) Line 1279和1736: share URL统一为/s/{id}格式; (4) 前端调用/api/clipboard/{id}/share获取的二维码链接也是/s/{id}格式。修改时注意：multipart字段名必须是\"customSuffix\"，必须先检查数据库唯一性，返回409表示尾缀已被使用",
+      "createdAt": "2025-12-05T00:22:42.942",
+      "updatedAt": "2025-12-05T00:49:02.759"
+    }
+  ],
+  "src/components/clipboard/ItemDetailDialog.tsx": [
+    {
+      "id": "notebook-1764914175032_89te812mu",
+      "filePath": "src/components/clipboard/ItemDetailDialog.tsx",
+      "note": "⚠️ 编辑功能已从列表/网格视图移至详情页。TEXT类型条目在详情页可编辑，鼠标悬停文本框时显示复制和编辑图标（opacity-0 group-hover:opacity-100）。点击Pencil图标进入编辑模式，点击Check图标保存。编辑状态通过isEditing控制，编辑时使用Textarea组件。文本区域右侧预留pr-24空间放置按钮。",
+      "createdAt": "2025-12-05T13:56:15.032",
+      "updatedAt": "2025-12-05T14:02:02.956"
+    }
+  ],
+  "src/app/page.tsx": [
+    {
+      "id": "notebook-1764914182772_npbm4st8h",
+      "filePath": "src/app/page.tsx",
+      "note": "⚠️ ItemDetailDialog必须传递onRequestEdit回调才能显示编辑按钮！编辑按钮的显示条件是 {onRequestEdit && ...}。编辑成功后需要同时更新items列表和selectedItem状态，确保UI实时同步。",
+      "createdAt": "2025-12-05T13:56:22.772",
+      "updatedAt": "2025-12-05T14:07:25.495"
+    }
+  ],
+  "src/components/clipboard/AddItemDialog.tsx": [
+    {
+      "id": "notebook-1764915311412_ww05l7uvg",
+      "filePath": "src/components/clipboard/AddItemDialog.tsx",
+      "note": "⚠️ 错误处理：409 状态码（自定义尾缀重复）显示\"尾缀重复\"提示。其他错误显示原始错误消息。检查 error?.response?.status === 409 来判断。",
+      "createdAt": "2025-12-05T14:15:11.412",
+      "updatedAt": "2025-12-05T14:15:11.412"
+    }
+  ],
+  "src/components/clipboard/CreateShareDialog.tsx": [
+    {
+      "id": "notebook-1764920525394_val6lkzkl",
+      "filePath": "src/components/clipboard/CreateShareDialog.tsx",
+      "note": "⚠️ 尾缀编辑功能已优化：用户可直接编辑链接尾缀并点击\"保存并关闭\"按钮更新。409状态码表示尾缀重复，必须检查 res.status === 409 并显示\"尾缀重复\"提示。后端支持 customSuffix 参数更新 ClipboardItem 的 id 和 ShareLink 的 token/itemId。重置按钮和保存按钮都支持 customSuffix 修改。",
+      "createdAt": "2025-12-05T15:42:05.394",
+      "updatedAt": "2025-12-05T15:42:05.394"
+    },
+    {
+      "id": "notebook-1764917627869_0m67btdq2",
+      "filePath": "src/components/clipboard/CreateShareDialog.tsx",
+      "note": "⚠️ 尾缀编辑功能：409状态码表示尾缀重复，必须检查 res.status === 409 并显示\"尾缀重复\"提示。保存和重置按钮都需要处理customSuffix参数，并在成功后从返回的URL中提取新尾缀更新状态。",
+      "createdAt": "2025-12-05T14:53:47.869",
+      "updatedAt": "2025-12-05T14:53:47.869"
+    }
+  ]
+}
