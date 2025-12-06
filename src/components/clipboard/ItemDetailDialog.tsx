@@ -206,47 +206,49 @@ export default function ItemDetailDialog({
         <div className="space-y-6">
           {item.content && (
             <div>
-              <h3 className="text-sm font-medium mb-2">内容</h3>
-              <div className="relative bg-muted p-4 rounded-lg group">
-                {item.type === "TEXT" && !isEditing && (
-                  <>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => copyToClipboard(item.content!)}
-                      className="absolute top-2 right-12 h-8 opacity-0 group-hover:opacity-100 transition-opacity"
-                      aria-label="复制"
-                      title="复制"
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                    {onRequestEdit && (
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <h3 className="text-sm font-medium">内容</h3>
+                {item.type === "TEXT" && (
+                  <div className="flex items-center gap-2">
+                    {isEditing ? (
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setIsEditing(true)}
-                        className="absolute top-2 right-2 h-8 opacity-0 group-hover:opacity-100 transition-opacity"
-                        aria-label="编辑"
-                        title="编辑"
+                        onClick={handleSaveEdit}
+                        disabled={isSaving}
+                        aria-label="保存"
+                        title="保存"
                       >
-                        <Pencil className="h-4 w-4" />
+                        <Check className="h-4 w-4" />
                       </Button>
+                    ) : (
+                      <>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => copyToClipboard(item.content!)}
+                          aria-label="复制"
+                          title="复制"
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                        {onRequestEdit && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setIsEditing(true)}
+                            aria-label="编辑"
+                            title="编辑"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </>
                     )}
-                  </>
+                  </div>
                 )}
-                {item.type === "TEXT" && isEditing && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleSaveEdit}
-                    disabled={isSaving}
-                    className="absolute top-2 right-2 h-8 transition-opacity"
-                    aria-label="保存"
-                    title="保存"
-                  >
-                    <Check className="h-4 w-4" />
-                  </Button>
-                )}
+              </div>
+              <div className="relative bg-muted p-4 rounded-lg">
                 {isEditing ? (
                   <Textarea
                     value={editContent}
@@ -255,7 +257,7 @@ export default function ItemDetailDialog({
                     placeholder="输入内容..."
                   />
                 ) : (
-                  <pre className="whitespace-pre-wrap break-words text-sm pr-24">
+                  <pre className="whitespace-pre-wrap break-words text-sm">
                     {item.content}
                   </pre>
                 )}
