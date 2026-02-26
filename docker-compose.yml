@@ -1,0 +1,11 @@
+services:
+  app:
+    image: ghcr.io/impersonality/clip-relay-custom:latest
+    ports:
+      - "8087:8087"
+    environment:
+      - CLIPBOARD_PASSWORD=abc123456
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    pull_policy: always
